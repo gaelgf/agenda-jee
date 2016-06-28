@@ -32,7 +32,7 @@ public class UserManagerDB implements IUserManager {
 	
 	public Connection getConnection() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 		Connection connection = null;
-		String url = "jdbc:mysql://localhost:3306/esgi";
+		String url = "jdbc:mysql://localhost:3306/agenda-jee";
 		Class.forName("com.mysql.jdbc.Driver").newInstance();
 		connection = DriverManager.getConnection(url, "root", "");
 		return connection;
@@ -55,7 +55,7 @@ public class UserManagerDB implements IUserManager {
 		PreparedStatement stmt = null;
 		int result = 0;
 		try {
-			String userSQL ="INSERT INTO users(login, password) VALUES(?, ?);";
+			String userSQL ="INSERT INTO user(login, password) VALUES(?, ?);";
 			stmt = this.connection.prepareStatement(userSQL);
 			
 			stmt.setString(1, login);

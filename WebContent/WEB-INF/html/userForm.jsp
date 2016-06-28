@@ -29,7 +29,7 @@
 					}
 				%>
 				<h2>${title}</h2>
-				<form action="${action}" method="get">
+				<form action="${action}" method="post">
 				  <div class="form-group">
 				    <label for="login">Login</label>
 				    <input type="text" class="form-control" name="user" id="login" placeholder="Login">

@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import fr.esgi.model.IUserManager;
-import fr.esgi.model.UserManagerInMemory;
+import fr.esgi.model.UserManagerDB;
 
 /**
  * Servlet implementation class UserServlet
@@ -21,7 +21,7 @@ import fr.esgi.model.UserManagerInMemory;
 )
 public class UserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    private IUserManager userManager = new UserManagerInMemory(); 
+    private IUserManager userManager = new UserManagerDB(); 
     
     /**
      * @see HttpServlet#HttpServlet()
@@ -83,8 +83,8 @@ public class UserServlet extends HttpServlet {
 			if (this.userManager.checkLogin(login)) {
 				request.setAttribute("errorMessage", "User already exists. Please chose another");
 			} else {
-				this.userManager.createUser(login, password);
-				request.setAttribute("success", "User created");
+				if(this.userManager.createUser(login, password))
+					request.setAttribute("success", "User created");
 			}	
 		}
 		
