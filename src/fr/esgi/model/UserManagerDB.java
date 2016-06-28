@@ -40,13 +40,16 @@ public class UserManagerDB implements IUserManager {
 
 	@Override
 	public boolean checkLogin(String login) {
-		// TODO Auto-generated method stub
-		return false;
+		User u = this.getUser(login);
+		return u!= null;
 	}
 
 	@Override
 	public boolean checkLoginWithPassword(String login, String password) {
-		// TODO Auto-generated method stub
+		User u = this.getUser(login);
+		if(u != null) {
+			return u.getPassword().equals(password);
+		}
 		return false;
 	}
 
@@ -71,13 +74,39 @@ public class UserManagerDB implements IUserManager {
 	}
 	
 	@Override
+	public User getUser(String login) {
+		User user = null; 
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		try {
+			
+			String userSQL = "SELECT * FROM user WHERE login = ?";
+			stmt = this.connection.prepareStatement(userSQL);
+			stmt.setString(1, login);
+			
+			rs = stmt.executeQuery();
+			while(rs.next()){
+				String loginU = rs.getString("login");
+				String password = rs.getString("password");
+				user = new User(loginU, password);
+			}
+			rs.close();
+			stmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}		
+		return user;
+	}
+
+	
+	@Override
 	public List<User> allUsers() {
 		List<User> userList = new ArrayList<>();
 		Statement stmt = null;
 		ResultSet rs = null;
 		try {
 			stmt = this.connection.createStatement();
-			String userSQL = "SELECT * FROM  users;";
+			String userSQL = "SELECT * FROM  user;";
 			rs = stmt.executeQuery(userSQL);
 			while(rs.next()) {
 				String login = rs.getString("login");
@@ -97,7 +126,7 @@ public class UserManagerDB implements IUserManager {
 		PreparedStatement stmt = null;
 		int result = 0;
 		try {
-			String deleteUserSQL ="DELETE FROM users WHERE login = ?;";
+			String deleteUserSQL ="DELETE FROM user WHERE login = ?;";
 			stmt = this.connection.prepareStatement(deleteUserSQL);
 			stmt.setString(1, login);
 			
