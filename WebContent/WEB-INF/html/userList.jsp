@@ -3,6 +3,7 @@
 %>
 
 <jsp:directive.page import="com.dhtmlx.demo.model.User"/>
+
 <jsp:directive.page import="java.util.List"/>
 
 <!DOCTYPE html PUBLIC "-//W3C/DTD HTML 401 Transitional/EN" "http://www.w3.org/TR/html4/loose.dtd">
