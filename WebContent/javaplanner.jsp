@@ -10,7 +10,7 @@
 		   s.views.add(view);
            s.localizations.set("fr");
            s.setWidth(900);
-           s.setInitialDate(2016, 0, 21);
+           s.setInitialDate(2016, 0, 20);
            s.load("events.jsp", DHXDataFormat.JSON);
            s.data.dataprocessor.setURL("events.jsp");
            return s.render();
